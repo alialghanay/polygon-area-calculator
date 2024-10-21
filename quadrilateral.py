@@ -37,7 +37,7 @@ class Quadrilateral(ABC):
         pass
 
     def __str__(self):
-        return f"Width: {self._width}, Height: {self._height}"
+        return f"{self.__class__.__name__}(width={self._width}, height={self._height})"
 
 class Rectangle(Quadrilateral):
     _width = 0
@@ -51,17 +51,21 @@ class Rectangle(Quadrilateral):
     def get_diagonal(self):
         return (self._width ** 2 + self._height ** 2) ** 0.5
     def get_picture(self):
+        if self._width > 50 or self._height > 50:
+            return "Too big for picture."
         return f"{'*' * self._width}\n" * self._height
+    def get_amount_inside(self, shape):
+        return (self._width // shape._width) * (self._height // shape._height)
 
 class Square(Rectangle):
     def __init__(self, side):
         super().__init__(side, side)
     def set_side(self, side):
-        self.set_width(side)
-        self.set_height(side)
+        self._width = side
+        self._height = side
     def set_width(self, width):
         self.set_side(width)
     def set_height(self, height):
         self.set_side(height)
     def __str__(self):
-        return f"Side: {self._width}"
+        return f"{self.__class__.__name__}(side={self._width})"
